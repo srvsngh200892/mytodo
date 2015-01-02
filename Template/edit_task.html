@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block body %}
+ <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">ToDo App</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+             <li class='active'><a href="/home">Welcome {{ user.username }}</a></li>
+            <li><a href="/home/add/task">Add Task</a></li>
+            <li><a href="/logout/">Logout</a><li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+<div class='well'>
+     <h3 class='text-center'>Update Task Information</h3>
+     <div class = 'container '>
+	 	<div class="row">
+	 		<form class="form-horizontal update-task" action="." method="post">{% csrf_token %}
+	 		<div class="col-md-2"></div>
+	 			<div class="col-md-8">
+	 				<div class="row">
+						<div class="col-sm-6"> 					
+	 						<div class="form-group">
+                    			<label class="col-sm-4 control-label" for="title">Title</label>
+                        		<div class="col-sm-8">
+                        			<input type="text" class="form-control" name = "title"  value='{{task.title|default_if_none:""}}'>
+                        			<input type="hidden" class="form-control task-id"  name = "task_id"  value='{{task.id|default_if_none:""}}'>
+                        		</div>
+							</div>
+						</div>
+						
+						<div class="col-sm-6">
+							<div class="form-group">
+                    			<label class="col-sm-4 control-label" for="due_date">Due Date</label>
+                        		<div class="col-sm-8">
+                            		<div class="col-sm-8">
+                        			<input  type="text" placeholder="click to show datepicker" name="due_date"  id="due-date" value='{{task.due_date|date:"Y-m-d" |default_if_none:""}}'>
+                        		</div>
+                            	</div>
+                   			</div>
+						</div>
+						
+	 				</div>
+	 				<div class="row">
+	 					<div class="col-sm-12">
+	 						<div class="form-group">
+                    		<label class="col-sm-2 control-label" for="description">Description</label>
+                        	<div class="col-sm-10">
+                        		<textarea  class="form-control" name="description"  value='{{task.description|default_if_none:""}}'>{{task.description|default_if_none:""}}</textarea>
+                       		</div>
+                 		</div>
+	 					</div>
+	 				</div>
+	 				
+	 				<div class="row">
+	 					<div class="col-sm-6">
+	 						<div class="form-group">
+                    			<label class="col-sm-4 control-label" for="piority">Priority</label>
+                        		<div class="col-sm-8">
+                            		<select id="priority" class="form-control" name="priority" >
+                                		{% for type in PRIORITY_CHOICES %}
+                      	            		<option {% if type == task.priority %} selected {% endif %} value="{{type}}">{{type}}</option>
+                                    	{% endfor %}
+                                 	</select>
+                           		</div>
+               				</div>
+	 					</div>
+	 					
+						<div class="col-sm-6">
+							<div class="form-group">
+                    			<label class="col-sm-4 control-label" for="status">Status</label>
+                       			<div class="col-sm-8">
+	                    			<select class="form-control " name="status">
+                            			{% for type in STATUS_CHOICES %}
+                                			<option {% if type == task.status %} selected {% endif %} value="{{type}}">{{type}}</option>
+                                		{% endfor %}
+                             		</select>
+								</div>
+							</div>
+						</div>
+	 				</div>
+	 				
+	 				<div class="row">
+	 					<div class="form-group">
+                   			<div class="col-sm-offset-5 col-sm-7">
+                   				<button type="submit" class="btn btn-primary">Update</button>
+									<a class="logout" href="/home"> 
+                 		    		<button type="button" class="btn btn-default">Cancel</button>
+		                		</a>                 				
+                   			</div>
+                  		</div>
+	 				</div>
+	 			</div>
+	 		<div class="col-md-2"></div>
+	 		</form>
+	 	</div>     
+	</div>	
+</div>	
+{% include "portal/modal.html" %}
+{% include "portal/waiting_modal.html" %}
+{% endblock %}
+
+{% block dependency%}
+<script src="/static/js/portal/utils.js"></script>
+<script src="/static/js/portal/main.js"></script>
+{% endblock dependency %}
+

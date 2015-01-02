@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block body %}
+ <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">ToDo App</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+             <li><a href="/home">Welcome {{ user.username }}</a></li>
+            <li class="active"><a href="/home/add/task">Add Task</a></li>
+            <li><a href="/logout/">Logout</a><li>
+          </ul>
+        </div>
+      </div>
+    </nav>  
+<div class='well'>
+     <h3 class='text-center'>Add Task Information</h3>
+     <div class = 'container '>
+	 	<div class="row">
+	 		<form class="form-horizontal addTask" action="." method="post">{% csrf_token %}
+	 		<div class="col-md-2"></div>
+	 			<div class="col-md-8">
+
+                <div class="row">
+                	<div class="col-md-4 form-group">
+                    <label class="control-label">Title*:</label>
+                  </div>
+                  <div class="col-md-8 form-group">
+                    <input type="text" class="form-control" name="title" id="title" required>
+                  </div>
+
+                </div>
+                   <div class="row">
+                  <div class="col-md-4 form-group">
+                    <label class="control-label">Description*:</label>
+                  </div>
+                  <div class="col-md-8 form-group">
+                    <input type="textear" class="form-control" name="description" id="description" required>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 form-group">
+                      <label class="control-label" for="due_date">Due Date</label>
+                  </div>  
+                  <div class="col-md-8 form-group"> 
+                      <input  type="text" placeholder="click to show datepicker" name="due_date"  id="due-date">
+                    </div>
+                  </div>
+                <div class="row">
+                   <div class="col-md-4 form-group">
+                    <label class="control-label">Priority*:</label>
+                  </div>
+                  <div class="col-md-8 form-group">
+                    <select class="form-control" name="priority" id="priority" required>
+                      <option value="">Select Priority</option>
+                      {% for type in PRIORITY_CHOICES %}
+                      <option value="{{type}}">{{type}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div> 
+                <div class="row">
+                  <div class="col-md-12 form-group text-center">
+                    <button type="submit" value="Submit" class="btn btn-primary">
+                    Submit
+                    </button>
+                  </div>
+                </div>               
+                
+         </form>
+     </div>
+ </div>
+</div>
+{% include "portal/modal.html" %}
+{% include "portal/waiting_modal.html" %}
+{% endblock %}
+
+{% block dependency%}
+<script src="/static/js/portal/main.js"></script>
+<script src="/static/js/portal/utils.js"></script>
+{% endblock dependency %} 
+
+
