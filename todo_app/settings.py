@@ -48,7 +48,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'todo',
-    )
+    'storages',
+    'boto',
+    'dj-database-url',
+)
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -100,29 +103,25 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-
-
-
-# Parse database configuration from $DATABASE_URL
 import dj_database_url
-
-#DATABASES['default'] =  dj_database_url.config()
-
-DATABASES = {'default':dj_database_url.config(default='postgres://localhost')}
+DATABASES['default'] =  dj_database_url.config()
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-
+# Allow all host headers
 ALLOWED_HOSTS = ['*']
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Static asset configuration
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+# try to load local_settings.py if it exists
