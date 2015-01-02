@@ -50,7 +50,6 @@ INSTALLED_APPS = (
     'todo',
     'storages',
     'boto',
-    'dj-database-url',
 )
 
 MIDDLEWARE_CLASSES = (
