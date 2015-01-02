@@ -48,6 +48,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'todo',
+    'storages',
+    'boto'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -102,6 +104,8 @@ STATICFILES_DIRS = (
 
 ALLOWED_HOSTS = ['*']
 
+STATIC_ROOT = 'staticfiles'
+
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
 
@@ -109,5 +113,7 @@ DATABASES = { 'default' : dj_database_url.config()}
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # try to load local_settings.py if it exists
