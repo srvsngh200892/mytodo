@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT todo_app.wsgi:application
+web: python manage.py runserver 0:$PORT
